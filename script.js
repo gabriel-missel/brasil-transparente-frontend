@@ -295,3 +295,29 @@ document.addEventListener("DOMContentLoaded", () => {
       : await renderFullReport();
   })();
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const generalButton = document.querySelector(
+    '.report-button[data-report="geral"]'
+  );
+  if (generalButton) {
+    generalButton.addEventListener("mouseover", function () {
+      generalButton.querySelector("span").textContent = "Selecionar outro";
+    });
+    generalButton.addEventListener("mouseout", function () {
+      const federalEntityName =
+        localStorage.getItem("federalEntityName") || "União Federal";
+      generalButton.querySelector("span").textContent = federalEntityName;
+    });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const federalEntityName =
+    localStorage.getItem("federalEntityName") || "União Federal";
+  const federalEntityImage =
+    localStorage.getItem("federalEntityImage") || "images/estados/uniao.png";
+
+  document.getElementById("state-name").textContent = federalEntityName;
+  document.getElementById("state-image").src = federalEntityImage;
+});
