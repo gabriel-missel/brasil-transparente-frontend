@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const API_BASE = "http://localhost:8080";
-  //const API_BASE = "";
+  //const API_BASE = "http://localhost:8080";
+  const API_BASE = "";
 
   const main = document.querySelector("main");
   const reportButtons = document.querySelectorAll(".report-button");
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const fetchAndDisplayTotal = async () => {
     try {
-      const response = await fetch(`${API_BASE}/getGastoTotal`);
+      const response = await fetch(`${API_BASE}/gasto-total`);
       const total = Number(await response.json());
       const totalValueElement = document.querySelector(".total-value");
       totalValueElement.dataset.rawValue = total;
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const renderSimplifiedReport = async () => {
     clearContent();
-    const data = await fetchData(`${API_BASE}/getSimplifiedReport`);
+    const data = await fetchData(`${API_BASE}/despesa-simplificada`);
     data.forEach((item) => {
       const container = createElement("div", "bar-container");
       const label = createElement(
@@ -117,13 +117,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const renderFullReport = async () => {
     clearContent();
-    const poderes = await fetchData(`${API_BASE}/getPoderes`);
+    const poderes = await fetchData(`${API_BASE}/poderes`);
     poderes.forEach((poder) => {
       const { container, label } = createToggleItem(
         poder.name,
         async (parent) => {
           const ministerios = await fetchData(
-            `${API_BASE}/getMinisterioByPoderId?poderId=${poder.id}`
+            `${API_BASE}/poder/${poder.id}/ministerios`
           );
           renderMinisterios(parent, ministerios);
         }
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ministerio.name,
         async (parent) => {
           const orgaos = await fetchData(
-            `${API_BASE}/getOrgaoByMinisterioId?ministerioId=${ministerio.id}`
+            `${API_BASE}/ministerio/${ministerio.id}/orgaos`
           );
           renderOrgaos(parent, orgaos);
         }
@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
         orgao.name,
         async (parent) => {
           const unidades = await fetchData(
-            `${API_BASE}/getUnidadeGestoraByOrgaoId?orgaoId=${orgao.id}`
+            `${API_BASE}/orgao/${orgao.id}/unidades-gestoras`
           );
           renderUnidades(parent, unidades);
         }
@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
         unidade.name,
         async (parent) => {
           const elementos = await fetchData(
-            `${API_BASE}/getElementoDespesaByUnidadeGestoraId?unidadeGestoraId=${unidade.id}`
+            `${API_BASE}/unidade-gestora/${unidade.id}/elemento-despesa`
           );
           renderElementos(parent, elementos);
         }
