@@ -90,15 +90,30 @@
         <a href="/">
           <img
             src="images/white-transparent-small.png"
-            alt="Company Logo"
+            alt="BT Logo"
             class="header-image"
           />
         </a>
         <nav class="report-nav">
-          <button class="report-button active" data-report="simplificado">
+          <button
+            onclick="window.location.href='estados.html'"
+            class="report-button"
+            data-report="geral"
+            data-original-text="União Federal"
+          >
+            <img src="" alt="Geral" id="state-image" />
+            <span id="state-name">União Federal</span>
+          </button>
+          <button
+            class="report-button report-button-text-center active"
+            data-report="simplificado"
+          >
             Resumo dos Gastos
           </button>
-          <button class="report-button" data-report="completo">
+          <button
+            class="report-button report-button-text-center"
+            data-report="completo"
+          >
             Todos os Gastos
           </button>
         </nav>
@@ -106,7 +121,7 @@
     </header>
     <main>
       <div class="total-display">
-        <h2>Valor pago pela União em 2024:</h2>
+        <h2>Despesa executada em 2024:</h2>
         <div class="total-value"></div>
       </div>
     </main>
@@ -121,7 +136,7 @@
           </ul>
         </div>
         <div class="footer-section">
-          <h3>Ajude a manter o site funcionando</h3>
+          <h3>Apoie o projeto</h3>
           <div class="donation-container">
             <div class="paypal-wallet">
               <form

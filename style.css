@@ -54,7 +54,7 @@ header {
   border-radius: 8px;
   text-decoration: none;
   transition: var(--transition);
-  margin-bottom: -1rem;
+
   box-shadow: var(--card-shadow);
   border: 0.5px solid transparent;
 }
@@ -91,21 +91,50 @@ header {
   padding: 0.9rem 1.6rem;
   border: none;
   border-radius: 8px;
-  background: #fff;
+  background: white;
   color: var(--azul-brasil);
   font-family: "Inter", sans-serif;
   font-weight: 600;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
   transition: var(--transition);
   box-shadow: var(--card-shadow);
-  display: flex;
   align-items: center;
-  gap: 0.5rem;
   position: relative;
   overflow: hidden;
   transition: all 0.2s ease;
+  width: 200px;
+  height: 50px;
+}
+
+.report-button:first-child {
+  display: grid;
+  padding: 0 1em;
+  background: var(--azul-brasil);
+  color: white;
+  border: 2.5px solid white;
+}
+
+.report-button:first-child:hover {
+  background: white;
+  color: var(--azul-brasil);
+}
+
+.report-button img {
+  height: 35px;
+  vertical-align: middle;
+  margin-right: 0;
+  grid-column: 1;
+}
+
+.report-button span {
+  text-align: left;
+  grid-column: 2;
+}
+
+.report-button-text-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .report-button:hover {
@@ -160,6 +189,10 @@ main {
   text-align: justify;
 }
 
+h1 {
+  font-size: 1.5rem;
+}
+
 .text-heavy a {
   color: #3498db;
   text-decoration: underline;
@@ -195,7 +228,54 @@ main {
   margin: 0;
 }
 
-/* Big Screens */
+.state-selection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.state-option-alive,
+.state-option-dead {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background);
+  color: var(--azul-brasil);
+  border-radius: 0.75rem;
+  box-shadow: var(--card-shadow);
+  padding: 1rem;
+  text-decoration: none;
+  text-align: center;
+  height: 100px;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+.state-option-alive:hover {
+  background-color: var(--amarelo-ouro);
+  color: var(--azul-brasil);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.state-option-dead {
+  cursor: default;
+}
+
+.state-image-alive {
+  filter: grayscale(0%);
+  height: 60px;
+  margin-bottom: 1em;
+}
+
+.state-image-dead {
+  filter: grayscale(100%);
+  height: 60px;
+  margin-bottom: 1em;
+}
+
+/* Tablet */
 @media (min-width: 768px) {
   .total-display {
     padding: 2rem;
@@ -316,7 +396,7 @@ main {
 footer {
   background: linear-gradient(135deg, var(--azul-brasil), var(--verde-escuro));
   padding: 2em 1em;
-  color: #fff;
+  color: white;
   position: relative;
   margin-top: auto;
 }
@@ -341,7 +421,7 @@ footer {
 }
 
 .footer-links a {
-  color: #fff;
+  color: white;
   text-decoration: none;
   transition: color 0.3s ease;
   display: block;
@@ -413,7 +493,7 @@ footer {
   }
 }
 
-/* Phone */
+/* Mobile Phone */
 @media (max-width: 550px) {
   header {
     padding: 0 !important;
@@ -423,6 +503,10 @@ footer {
     padding: 1rem 0 !important;
     margin: 0;
     width: 100%;
+  }
+
+  h1 {
+    font-size: 1.1rem;
   }
 
   .header-image {
@@ -442,8 +526,13 @@ footer {
 
   .report-button {
     width: 70%;
+    height: 40px;
     padding: 0.85rem;
     font-size: 0.8rem;
+  }
+
+  .report-button img {
+    height: 30px;
   }
 
   .bar-label {
@@ -471,6 +560,25 @@ footer {
 
   .content-container {
     margin: 1.75em 0.5em;
+  }
+
+  .state-selection {
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .state-option-alive,
+  .state-option-dead {
+    padding: 0.5rem;
+    height: 70px;
+    font-size: 0.8rem;
+  }
+
+  .state-image-alive,
+  .state-image-dead {
+    height: 40px;
+    margin-bottom: 0.5em;
   }
 
   footer {
