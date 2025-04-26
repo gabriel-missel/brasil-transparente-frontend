@@ -15,7 +15,7 @@ Módulo responsável pela interface gráfica e pela comunicação com o brasil-t
 1. Faça o passo a passo para o módulo brasil-transparente-api e certifique-se que ele está funcionando.
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/gabriel-missel/brasil-transparente-frontend.git
+   git clone https://github.com/brasil-transparente/brasil-transparente-frontend.git
    ```
 1. Certifique-se que o módulo brasil-transparente-api está up.
 1. Execute a extensão Live Server no canto inferior direito.
