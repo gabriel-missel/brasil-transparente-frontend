@@ -71,7 +71,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const fetchAndDisplayTotal = async () => {
     try {
-      const response = await fetch(`${API_BASE}/gasto-total`);
+      const response = await fetch(
+        `${API_BASE}/unidade-federativa/1/total-value-spent`
+      );
       const total = Number(await response.json());
       const totalValueElement = document.querySelector(".total-value");
       totalValueElement.dataset.rawValue = total;
@@ -117,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const renderFullReport = async () => {
     clearContent();
-    const poderes = await fetchData(`${API_BASE}/poderes`);
+    const poderes = await fetchData(`${API_BASE}/unidade-federativa/1/poderes`);
     poderes.forEach((poder) => {
       const { container, label } = createToggleItem(
         poder.name,
