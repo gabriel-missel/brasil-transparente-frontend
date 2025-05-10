@@ -76,7 +76,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-    <link rel="stylesheet" href="style.20250426.css" />
+    <link rel="stylesheet" href="style.20250510.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -117,10 +117,24 @@
             União Federal
           </a>
           <a
+            href="#"
+            class="state-option-alive"
+            data-state="Rio Grande do Sul"
+            data-image="images/estados/rio_grande_do_sul.png"
+            onclick="selectState('Rio Grande do Sul', 'images/estados/rio_grande_do_sul.png', 2)"
+          >
+            <img
+              src="images/estados/rio_grande_do_sul.png"
+              alt="Rio Grande do Sul"
+              class="state-image-alive"
+            />
+            Rio Grande do Sul
+          </a>
+          <a
             class="state-option-dead"
             data-state="Acre"
             data-image="images/estados/acre.png"
-            onclick="selectState('Acre', 'images/estados/acre.png', 2)"
+            onclick="selectState('Acre', 'images/estados/acre.png', 22)"
           >
             <img
               src="images/estados/acre.png"
@@ -378,19 +392,6 @@
           </a>
           <a
             class="state-option-dead"
-            data-state="Rio Grande do Sul"
-            data-image="images/estados/rio_grande_do_sul.png"
-            onclick="selectState('Rio Grande do Sul', 'images/estados/rio_grande_do_sul.png', 22)"
-          >
-            <img
-              src="images/estados/rio_grande_do_sul.png"
-              alt="Rio Grande do Sul"
-              class="state-image-dead"
-            />
-            Rio Grande do Sul
-          </a>
-          <a
-            class="state-option-dead"
             data-state="Rondônia"
             data-image="images/estados/rondonia.png"
             onclick="selectState('Rondônia', 'images/estados/rondonia.png', 23)"
@@ -543,6 +544,6 @@
         window.location.href = "/";
       }
     </script>
-    <script src="script.20250426.js" defer data-priority="low"></script>
+    <script src="script.20250510.js" defer data-priority="low"></script>
   </body>
 </html>

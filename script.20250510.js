@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const API_BASE = "http://localhost:8080";
-  //const API_BASE = "";
+  //const API_BASE = "http://localhost:8080";
+  const API_BASE = "";
 
   const main = document.querySelector("main");
   const reportButtons = document.querySelectorAll(".report-button");
+  const federalEntityId = localStorage.getItem("federalEntityId") || "1";
 
   const createElement = (tag, className, content = "") => {
     const el = document.createElement(tag);
@@ -72,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const fetchAndDisplayTotal = async () => {
     try {
       const response = await fetch(
-        `${API_BASE}/unidade-federativa/1/total-value-spent`
+        `${API_BASE}/unidade-federativa/${federalEntityId}/total-value-spent`
       );
       const total = Number(await response.json());
       const totalValueElement = document.querySelector(".total-value");
@@ -95,22 +96,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const renderSimplifiedReport = async () => {
     await clearContent();
-    const data = await fetchData(`${API_BASE}/despesa-simplificada`);
+    const data = await fetchData(
+      `${API_BASE}/despesa-simplificada/${federalEntityId}`
+    );
 
     data.forEach((item, index) => {
       const container = createElement("div", "bar-container fade-out");
-      const label = createElement(
-        "span",
-        "bar-label-simplified",
-        item.despesaSimplificadaName
-      );
+      const label = createElement("span", "bar-label-simplified", item.name);
       container.append(
         label,
-        createBar(
-          item.despesaSimplificadaTotalValue,
-          item.despesaSimplificadaPercentageOfTotal,
-          0
-        )
+        createBar(item.totalValue, item.percentageOfTotal, 0)
       );
       main.appendChild(container);
 
@@ -132,7 +127,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const renderFullReport = async () => {
     await clearContent();
-    const poderes = await fetchData(`${API_BASE}/unidade-federativa/1/poderes`);
+    const poderes = await fetchData(
+      `${API_BASE}/unidade-federativa/${federalEntityId}/poderes`
+    );
     poderes.forEach((poder, index) => {
       const { container, label } = createToggleItem(
         poder.name,
