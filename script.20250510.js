@@ -112,17 +112,19 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => container.classList.remove("fade-out"), 50 * index);
     });
 
-    [
-      "* Bolsa Família e outros.",
-      "** Seguro Desemprego e Abono Salarial.",
-    ].forEach((text, index) => {
-      const p = createElement("p", "additional-text fade-out", text);
-      main.appendChild(p);
-      setTimeout(
-        () => p.classList.remove("fade-out"),
-        50 * (data.length + index)
-      );
-    });
+    if (federalEntityId === "1") {
+      [
+        "* Bolsa Família e outros.",
+        "** Seguro Desemprego e Abono Salarial.",
+      ].forEach((text, index) => {
+        const p = createElement("p", "additional-text fade-out", text);
+        main.appendChild(p);
+        setTimeout(
+          () => p.classList.remove("fade-out"),
+          50 * (data.length + index)
+        );
+      });
+    }
   };
 
   const renderFullReport = async () => {
