@@ -5,6 +5,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const main = document.querySelector("main");
   const reportButtons = document.querySelectorAll(".report-button");
   const federalEntityId = localStorage.getItem("federalEntityId") || "1";
+  const loaderContainer = document.querySelector(".loader-container");
+
+  const showLoader = () => {
+    if (loaderContainer) loaderContainer.style.display = "flex";
+  };
+
+  const hideLoader = () => {
+    if (loaderContainer) loaderContainer.style.display = "none";
+  };
 
   const createElement = (tag, className, content = "") => {
     const el = document.createElement(tag);
@@ -52,7 +61,12 @@ document.addEventListener("DOMContentLoaded", () => {
         expanded ? "minus" : "plus"
       }"></i>`;
       if (expanded) {
-        await onClick(container);
+        showLoader();
+        try {
+            await onClick(container);
+        } finally {
+            hideLoader();
+        }
       } else {
         container.querySelector(".child-bar-container")?.remove();
       }
@@ -71,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const fetchAndDisplayTotal = async () => {
+    showLoader();
     try {
       const response = await fetch(
         `${API_BASE}/unidade-federativa/${federalEntityId}/total-value-spent`
@@ -81,12 +96,14 @@ document.addEventListener("DOMContentLoaded", () => {
       totalValueElement.textContent = formatLargeCurrency(total);
     } catch (error) {
       console.error("Error fetching total:", error);
+    } finally {
+        hideLoader();
     }
   };
 
   const clearContent = async () => {
     const containers = Array.from(main.children).filter(
-      (child) => !child.classList.contains("total-display")
+      (child) => !child.classList.contains("total-display") && !child.classList.contains("loader-container")
     );
 
     containers.forEach((child) => child.classList.add("fade-out"));
@@ -250,10 +267,15 @@ document.addEventListener("DOMContentLoaded", () => {
       reportButtons.forEach((btn) => btn.classList.remove("active"));
       button.classList.add("active");
 
-      if (button.dataset.report === "simplificado") {
-        await renderSimplifiedReport();
-      } else {
-        await renderFullReport();
+      showLoader();
+      try {
+          if (button.dataset.report === "simplificado") {
+            await renderSimplifiedReport();
+          } else {
+            await renderFullReport();
+          }
+      } finally {
+          hideLoader();
       }
     });
   });
@@ -306,14 +328,18 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 
-  // Initialization
   (async () => {
-    await fetchAndDisplayTotal();
-    const activeReport = document.querySelector(".report-button.active").dataset
-      .report;
-    activeReport === "simplificado"
-      ? await renderSimplifiedReport()
-      : await renderFullReport();
+    showLoader();
+    try {
+        await fetchAndDisplayTotal();
+        const activeReport = document.querySelector(".report-button.active").dataset
+          .report;
+        activeReport === "simplificado"
+          ? await renderSimplifiedReport()
+          : await renderFullReport();
+    } finally {
+        hideLoader();
+    }
   })();
 });
 
