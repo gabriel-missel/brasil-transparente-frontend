@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const API_BASE = "http://localhost:8080";
-  //const API_BASE = "";
+  //const API_BASE = "http://localhost:8080";
+  const API_BASE = "";
 
   const main = document.querySelector("main");
   const reportButtons = document.querySelectorAll(".report-button");
@@ -272,7 +272,6 @@ document.addEventListener("DOMContentLoaded", () => {
       reportButtons.forEach((btn) => btn.classList.remove("active"));
       button.classList.add("active");
 
-      // REMOVIDO: showLoader() e hideLoader() daqui, conforme a solicitação
       try {
           if (button.dataset.report === "simplificado") {
             await renderSimplifiedReport();
@@ -333,9 +332,8 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 
-  // Lógica de carregamento inicial da página (index.html)
   (async () => {
-    showLoader(); // Chama showLoader para a carga inicial (com o atraso)
+    showLoader();
     try {
         await fetchAndDisplayTotal();
         const activeReport = document.querySelector(".report-button.active").dataset
@@ -344,10 +342,10 @@ document.addEventListener("DOMContentLoaded", () => {
           ? await renderSimplifiedReport()
           : await renderFullReport();
     } catch (error) {
-        console.error("Error during initial load:", error);
+        console.error("Erro ao recuperar gasto total:", error);
     } finally {
-        hideLoader(); // Esconde o loader após o conteúdo inicial ser renderizado
-        isInitialLoadComplete = true; // Marca a carga inicial como completa
+        hideLoader();
+        isInitialLoadComplete = true;
     }
   })();
 });
