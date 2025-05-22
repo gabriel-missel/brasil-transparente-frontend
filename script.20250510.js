@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (loaderContainer) {
           loaderContainer.style.display = "flex";
         }
-      }, 500);
+      }, 1000);
     }
   };
 
@@ -108,7 +108,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const clearContent = async () => {
     const containers = Array.from(main.children).filter(
-      (child) => !child.classList.contains("total-display") && !child.classList.contains("loader-container")
+      (child) =>
+        !child.classList.contains("total-display") &&
+        !child.classList.contains("loader-container")
     );
 
     containers.forEach((child) => child.classList.add("fade-out"));
@@ -273,13 +275,16 @@ document.addEventListener("DOMContentLoaded", () => {
       button.classList.add("active");
 
       try {
-          if (button.dataset.report === "simplificado") {
-            await renderSimplifiedReport();
-          } else {
-            await renderFullReport();
-          }
+        if (button.dataset.report === "simplificado") {
+          await renderSimplifiedReport();
+        } else {
+          await renderFullReport();
+        }
       } catch (error) {
-          console.error("Erro ao renderizar gasto simplificado/total gasto: ", error);
+        console.error(
+          "Erro ao renderizar gasto simplificado/total gasto: ",
+          error
+        );
       }
     });
   });
@@ -335,17 +340,17 @@ document.addEventListener("DOMContentLoaded", () => {
   (async () => {
     showLoader();
     try {
-        await fetchAndDisplayTotal();
-        const activeReport = document.querySelector(".report-button.active").dataset
-          .report;
-        activeReport === "simplificado"
-          ? await renderSimplifiedReport()
-          : await renderFullReport();
+      await fetchAndDisplayTotal();
+      const activeReport = document.querySelector(".report-button.active")
+        .dataset.report;
+      activeReport === "simplificado"
+        ? await renderSimplifiedReport()
+        : await renderFullReport();
     } catch (error) {
-        console.error("Erro ao recuperar relatório de gasto:", error);
+      console.error("Erro ao recuperar relatório de gasto:", error);
     } finally {
-        hideLoader();
-        isInitialLoadComplete = true;
+      hideLoader();
+      isInitialLoadComplete = true;
     }
   })();
 });
