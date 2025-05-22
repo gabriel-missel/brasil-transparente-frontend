@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const response = await fetch(url);
       return await response.json();
     } catch (error) {
-      console.error(`Error fetching data from ${url}:`, error);
+      console.error(`Erro ao recuperar dado da url: ${url}:`, error);
       return [];
     }
   };
@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
       totalValueElement.dataset.rawValue = total;
       totalValueElement.textContent = formatLargeCurrency(total);
     } catch (error) {
-      console.error("Error fetching total:", error);
+      console.error("Erro ao recuperar valor total gasto: ", error);
     }
   };
 
@@ -279,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
             await renderFullReport();
           }
       } catch (error) {
-          console.error("Error rendering report:", error);
+          console.error("Erro ao renderizar gasto simplificado/total gasto: ", error);
       }
     });
   });
@@ -342,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
           ? await renderSimplifiedReport()
           : await renderFullReport();
     } catch (error) {
-        console.error("Erro ao recuperar gasto total:", error);
+        console.error("Erro ao recuperar relatório de gasto:", error);
     } finally {
         hideLoader();
         isInitialLoadComplete = true;
