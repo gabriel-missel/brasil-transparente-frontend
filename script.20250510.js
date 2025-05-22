@@ -7,12 +7,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const federalEntityId = localStorage.getItem("federalEntityId") || "1";
   const loaderContainer = document.querySelector(".loader-container");
 
+  let loaderTimeout;
+  let isInitialLoadComplete = false;
+
   const showLoader = () => {
-    if (loaderContainer) loaderContainer.style.display = "flex";
+    clearTimeout(loaderTimeout);
+    if (!isInitialLoadComplete) {
+      loaderTimeout = setTimeout(() => {
+        if (loaderContainer) {
+          loaderContainer.style.display = "flex";
+        }
+      }, 500);
+    }
   };
 
   const hideLoader = () => {
-    if (loaderContainer) loaderContainer.style.display = "none";
+    clearTimeout(loaderTimeout);
+    if (loaderContainer) {
+      loaderContainer.style.display = "none";
+    }
   };
 
   const createElement = (tag, className, content = "") => {
@@ -61,12 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
         expanded ? "minus" : "plus"
       }"></i>`;
       if (expanded) {
-        showLoader();
-        try {
-            await onClick(container);
-        } finally {
-            hideLoader();
-        }
+        await onClick(container);
       } else {
         container.querySelector(".child-bar-container")?.remove();
       }
@@ -79,13 +87,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const response = await fetch(url);
       return await response.json();
     } catch (error) {
-      console.error(`Error fetching data from ${url}:`, error);
+      console.error(`Erro ao recuperar dado da url: ${url}:`, error);
       return [];
     }
   };
 
   const fetchAndDisplayTotal = async () => {
-    showLoader();
     try {
       const response = await fetch(
         `${API_BASE}/unidade-federativa/${federalEntityId}/total-value-spent`
@@ -95,9 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
       totalValueElement.dataset.rawValue = total;
       totalValueElement.textContent = formatLargeCurrency(total);
     } catch (error) {
-      console.error("Error fetching total:", error);
-    } finally {
-        hideLoader();
+      console.error("Erro ao recuperar valor total gasto: ", error);
     }
   };
 
@@ -267,15 +272,14 @@ document.addEventListener("DOMContentLoaded", () => {
       reportButtons.forEach((btn) => btn.classList.remove("active"));
       button.classList.add("active");
 
-      showLoader();
       try {
           if (button.dataset.report === "simplificado") {
             await renderSimplifiedReport();
           } else {
             await renderFullReport();
           }
-      } finally {
-          hideLoader();
+      } catch (error) {
+          console.error("Erro ao renderizar gasto simplificado/total gasto: ", error);
       }
     });
   });
@@ -337,8 +341,11 @@ document.addEventListener("DOMContentLoaded", () => {
         activeReport === "simplificado"
           ? await renderSimplifiedReport()
           : await renderFullReport();
+    } catch (error) {
+        console.error("Erro ao recuperar relatório de gasto:", error);
     } finally {
         hideLoader();
+        isInitialLoadComplete = true;
     }
   })();
 });
