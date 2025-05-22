@@ -1,18 +1,31 @@
 document.addEventListener("DOMContentLoaded", () => {
-  //const API_BASE = "http://localhost:8080";
-  const API_BASE = "";
+  const API_BASE = "http://localhost:8080";
+  //const API_BASE = "";
 
   const main = document.querySelector("main");
   const reportButtons = document.querySelectorAll(".report-button");
   const federalEntityId = localStorage.getItem("federalEntityId") || "1";
   const loaderContainer = document.querySelector(".loader-container");
 
+  let loaderTimeout;
+  let isInitialLoadComplete = false;
+
   const showLoader = () => {
-    if (loaderContainer) loaderContainer.style.display = "flex";
+    clearTimeout(loaderTimeout);
+    if (!isInitialLoadComplete) {
+      loaderTimeout = setTimeout(() => {
+        if (loaderContainer) {
+          loaderContainer.style.display = "flex";
+        }
+      }, 500);
+    }
   };
 
   const hideLoader = () => {
-    if (loaderContainer) loaderContainer.style.display = "none";
+    clearTimeout(loaderTimeout);
+    if (loaderContainer) {
+      loaderContainer.style.display = "none";
+    }
   };
 
   const createElement = (tag, className, content = "") => {
@@ -61,12 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
         expanded ? "minus" : "plus"
       }"></i>`;
       if (expanded) {
-        showLoader();
-        try {
-            await onClick(container);
-        } finally {
-            hideLoader();
-        }
+        await onClick(container);
       } else {
         container.querySelector(".child-bar-container")?.remove();
       }
@@ -85,7 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const fetchAndDisplayTotal = async () => {
-    showLoader();
     try {
       const response = await fetch(
         `${API_BASE}/unidade-federativa/${federalEntityId}/total-value-spent`
@@ -96,8 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
       totalValueElement.textContent = formatLargeCurrency(total);
     } catch (error) {
       console.error("Error fetching total:", error);
-    } finally {
-        hideLoader();
     }
   };
 
@@ -267,15 +272,15 @@ document.addEventListener("DOMContentLoaded", () => {
       reportButtons.forEach((btn) => btn.classList.remove("active"));
       button.classList.add("active");
 
-      showLoader();
+      // REMOVIDO: showLoader() e hideLoader() daqui, conforme a solicitação
       try {
           if (button.dataset.report === "simplificado") {
             await renderSimplifiedReport();
           } else {
             await renderFullReport();
           }
-      } finally {
-          hideLoader();
+      } catch (error) {
+          console.error("Error rendering report:", error);
       }
     });
   });
@@ -328,8 +333,9 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 
+  // Lógica de carregamento inicial da página (index.html)
   (async () => {
-    showLoader();
+    showLoader(); // Chama showLoader para a carga inicial (com o atraso)
     try {
         await fetchAndDisplayTotal();
         const activeReport = document.querySelector(".report-button.active").dataset
@@ -337,8 +343,11 @@ document.addEventListener("DOMContentLoaded", () => {
         activeReport === "simplificado"
           ? await renderSimplifiedReport()
           : await renderFullReport();
+    } catch (error) {
+        console.error("Error during initial load:", error);
     } finally {
-        hideLoader();
+        hideLoader(); // Esconde o loader após o conteúdo inicial ser renderizado
+        isInitialLoadComplete = true; // Marca a carga inicial como completa
     }
   })();
 });
