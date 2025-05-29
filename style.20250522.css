@@ -1,7 +1,4 @@
 :root {
-  --primary-blue: #002776;
-  --accent-yellow: #ffdf00;
-  --dark-green: #075213;
   --background: #f8f9fa;
   --text-primary: #2d3436;
   --azul-brasil: #002776;
@@ -227,7 +224,7 @@ h1 {
 .total-value {
   font-size: 1.6rem;
   font-weight: 700;
-  color: var(--primary-blue);
+  color: var(--azul-brasil);
   letter-spacing: -0.05em;
   margin: 0;
 }
@@ -370,7 +367,7 @@ h1 {
   top: 0;
   height: 100%;
   width: 4px;
-  background: var(--accent-yellow);
+  background: var(--amarelo-ouro);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -736,7 +733,10 @@ main {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
-
