@@ -212,6 +212,7 @@ h1 {
   box-shadow: var(--card-shadow);
   text-align: center;
   transition: var(--transition);
+  min-height: 95px;
 }
 
 .total-display h2 {
@@ -227,6 +228,7 @@ h1 {
   color: var(--azul-brasil);
   letter-spacing: -0.05em;
   margin: 0;
+  animation: fadeIn 0.5s ease forwards;
 }
 
 .state-selection {
@@ -588,6 +590,10 @@ footer {
 
   .total-value {
     font-size: 1.6rem;
+  }
+
+  .total-display {
+    min-height: 65px;
   }
 
   .bar {
