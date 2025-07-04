@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
     await clearContent();
     const poderes = await fetchData(
       `${API_BASE}/unidade-federativa/${federalEntityId}/poderes`,
-      "called-despesas-completa"
+      "called-despesa-completa"
     );
     poderes.forEach((poder, index) => {
       const { container, label } = createToggleItem(
