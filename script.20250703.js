@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   //const API_BASE = "http://localhost:8080";
-  const API_BASE = "";
+  //const API_BASE = "";
+  const API_BASE =
+    "https://brasil-transparente-api-492194254445.us-central1.run.app";
 
   const main = document.querySelector("main");
   const reportButtons = document.querySelectorAll(".report-button");

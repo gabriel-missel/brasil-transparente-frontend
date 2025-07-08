@@ -1,2 +1,6 @@
 # Visual Studio Code Files
 .vscode/
+
+# Firebase local files
+pglite-debug.log
+hosting..cache
