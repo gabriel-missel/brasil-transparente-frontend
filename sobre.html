@@ -6,6 +6,17 @@
       src="https://cloud.umami.is/script.js"
       data-website-id="800195aa-5b0f-49b6-b341-b0cce882b035"
     ></script>
+    <script>
+      const currentHost = window.location.hostname;
+      const targetHost = "brasiltransparente.digital";
+      if (
+        currentHost === "brasil-transparente.web.app" ||
+        currentHost === "brasil-transparente.firebaseapp.com"
+      ) {
+        const newUrl = window.location.href.replace(currentHost, targetHost);
+        window.location.replace(newUrl);
+      }
+    </script>
     <link rel="canonical" href="https://brasiltransparente.digital" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -38,7 +49,7 @@
       href="images/android-chrome-192x192.png"
     />
     <link rel="stylesheet" href="fonts/fontawesome/css/all.min.css" />
-    <link rel="stylesheet" href="style.20250703.css" />
+    <link rel="stylesheet" href="style.20250708.css" />
   </head>
   <body>
     <header>
@@ -98,7 +109,6 @@
         </p>
       </main>
     </div>
-
     <footer>
       <div class="footer-content">
         <div class="footer-section">
@@ -114,51 +124,25 @@
             </li>
           </ul>
         </div>
-
         <div class="footer-section">
-          <h3>Apoie o projeto</h3>
-          <div class="donation-container">
-            <div class="paypal-wallet">
-              <form
-                action="https://www.paypal.com/donate"
-                method="post"
-                target="_top"
+          <h3>Apoie o projeto!</h3>
+          <ul class="footer-links">
+            <li class="donation-pix-item">
+              <i class="fa-brands fa-pix donation-pix-icon"></i>
+              <span id="pix-key" class="donation-pix-key">
+                brasiltransparente@pm.me
+              </span>
+              <button
+                class="donation-pix-copy-btn"
+                onclick="navigator.clipboard.writeText('brasiltransparente@pm.me'); this.innerText='Copiado!'; setTimeout(()=>this.innerText='Copiar',1500);"
               >
-                <input type="hidden" name="business" value="RMJXZN7M292FW" />
-                <input type="hidden" name="no_recurring" value="0" />
-                <input
-                  type="hidden"
-                  name="item_name"
-                  value="Brasil Transparente - Obrigado!"
-                />
-                <input type="hidden" name="currency_code" value="BRL" />
-                <input
-                  type="image"
-                  src="images/btn-paypal.png"
-                  border="0"
-                  name="submit"
-                  title="PayPal - Doação segura"
-                  alt="Faça doações com o botão do PayPal"
-                />
-              </form>
-            </div>
-            <div class="bitcoin-wallet">
-              <img
-                src="images/bitcoin.png"
-                alt="Bitcoin"
-                width="40"
-                height="40"
-                loading="lazy"
-              />
-              <div>
-                <strong>Carteira Bitcoin:</strong><br />
-                bc1qhzz5hp3qz8ew5mkgzt5t65wa4pg8ewxdy6lyps
-              </div>
-            </div>
-          </div>
+                Copiar
+              </button>
+            </li>
+          </ul>
+          <div class="donation-pix-note">Qualquer valor faz diferença 💚</div>
         </div>
       </div>
-
       <div class="footer-bottom">
         <p>
           Transparência se constrói com dados ao alcance de todos | Contato:
