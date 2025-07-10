@@ -87,7 +87,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const fetchData = async (url, umamiEvent = null) => {
     try {
       if (window.umami && umamiEvent) {
-        umami.track(umamiEvent);
+        umami.track(umamiEvent, {
+          type: "event",
+          props: { interaction: true },
+        });
       }
       const response = await fetch(url);
       return await response.json();
