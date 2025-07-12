@@ -612,7 +612,7 @@ footer {
 
   .bar {
     padding-left: 8px;
-    font-size: 0.875rem;
+    font-size: 0.9rem;
   }
 
   .child-bar-container {
@@ -707,7 +707,7 @@ footer {
 @media (max-width: 385px) {
   .bar {
     padding-left: 4px;
-    font-size: 0.735rem;
+    font-size: 0.9rem;
   }
 }
 
