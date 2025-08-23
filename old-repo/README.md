@@ -15,6 +15,8 @@ ng new brasil-transparente --routing --style=css
 # Entrar no diretório do projeto
 cd brasil-transparente
 
+// TODO - Verificar melhor aproach para o load dos dados
+
 
 
 - Visual Studio Code
