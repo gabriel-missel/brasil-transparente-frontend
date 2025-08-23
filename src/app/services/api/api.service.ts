@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DespesaSimplificada } from '../../models/despesa-simplificada.model';
@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment.development';
 export class ApiService {
   //TODO mover as URLS para arquivo referente a cada endpoint
   private readonly API_BASE = environment.apiBase;
-  private readonly http: HttpClient = Inject(HttpClient);
+  private readonly http: HttpClient = inject(HttpClient);
 
   getTotalValueSpent(federalEntityId: string): Observable<number> {
     return this.http.get<number>(`${this.API_BASE}/unidade-federativa/${federalEntityId}/total-value-spent`);
