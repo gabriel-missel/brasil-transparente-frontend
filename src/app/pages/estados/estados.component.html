@@ -1,131 +1,28 @@
 <main>
     <div class="content-container">
         <a routerLink="/" class="back-button">
-            <i class="fas fa-arrow-left"></i> Voltar ao Início
+            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 12H18M6 12L11 7M6 12L11 17" stroke="#fff" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+            Voltar ao Início
+
         </a>
         <h1>Selecione um ente federativo:</h1>
-        <div class="state-selection">
-            <a class="state-option-alive"
-                (click)="selectState('União Federal', 'images/estados/uniao.png', 1)">
-                <img src="images/estados/uniao.png" alt="União" class="state-image-alive" />
-                União Federal
+        <section class="state-selection">
+            @for (estado of estados; track estado.id) {
+                <a
+                [class.state-option-alive]="estado.ativo"
+                [class.state-option-dead]="!estado.ativo"
+                (click)="estado.ativo && selectState(estado.nome, estado.imagem, estado.id)"
+                [attr.tabindex]="estado.ativo ? 0 : -1"
+                [attr.aria-disabled]="!estado.ativo"
+                >
+                <img [src]="estado.imagem" [alt]="estado.nome" [class.state-image-alive]="estado.ativo"
+                    [class.state-image-dead]="!estado.ativo" />
+                {{ estado.nome }}
             </a>
-            <a class="state-option-alive"
-                (click)="selectState('Amazonas', 'images/estados/amazonas.png', 4)">
-                <img src="images/estados/amazonas.png" alt="Amazonas" class="state-image-alive" />
-                Amazonas
-            </a>
-            <a class="state-option-alive" (click)="selectState('Bahia', 'images/estados/bahia.png', 3)">
-                <img src="images/estados/bahia.png" alt="Bahia" class="state-image-alive" />
-                Bahia
-            </a>
-            <a class="state-option-alive"
-                (click)="selectState('Paraíba', 'images/estados/paraiba.png', 6)">
-                <img src="images/estados/paraiba.png" alt="Paraíba" class="state-image-alive" />
-                Paraíba
-            </a>
-            <a class="state-option-alive"
-                (click)="selectState('Rio Grande do Sul', 'images/estados/rio_grande_do_sul.png', 2)">
-                <img src="images/estados/rio_grande_do_sul.png" alt="Rio Grande do Sul"
-                    class="state-image-alive" />
-                Rio Grande do Sul
-            </a>
-            <a class="state-option-alive"
-                (click)="selectState('São Paulo', 'images/estados/sao_paulo.png', 5)">
-                <img src="images/estados/sao_paulo.png" alt="São Paulo" class="state-image-alive" />
-                São Paulo
-            </a>
-            <!-- Estados "dead" -->
-            <a class="state-option-dead">
-                <img src="images/estados/acre.png" alt="Acre" class="state-image-dead" />
-                Acre
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/alagoas.png" alt="Alagoas" class="state-image-dead" />
-                Alagoas
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/amapa.png" alt="Amapá" class="state-image-dead" />
-                Amapá
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/ceara.png" alt="Ceará" class="state-image-dead" />
-                Ceará
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/distrito_federal.png" alt="Distrito Federal" class="state-image-dead" />
-                Distrito Federal
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/espirito_santo.png" alt="Espírito Santo" class="state-image-dead" />
-                Espírito Santo
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/goias.png" alt="Goiás" class="state-image-dead" />
-                Goiás
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/maranhao.png" alt="Maranhão" class="state-image-dead" />
-                Maranhão
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/mato_grosso.png" alt="Mato Grosso" class="state-image-dead" />
-                Mato Grosso
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/mato_grosso_do_sul.png" alt="Mato Grosso do Sul"
-                    class="state-image-dead" />
-                Mato Grosso do Sul
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/minas_gerais.png" alt="Minas Gerais" class="state-image-dead" />
-                Minas Gerais
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/para.png" alt="Pará" class="state-image-dead" />
-                Pará
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/parana.png" alt="Paraná" class="state-image-dead" />
-                Paraná
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/pernambuco.png" alt="Pernambuco" class="state-image-dead" />
-                Pernambuco
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/piaui.png" alt="Piauí" class="state-image-dead" />
-                Piauí
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/rio_de_janeiro.png" alt="Rio de Janeiro" class="state-image-dead" />
-                Rio de Janeiro
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/rio_grande_do_norte.png" alt="Rio Grande do Norte"
-                    class="state-image-dead" />
-                Rio Grande do Norte
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/rondonia.png" alt="Rondônia" class="state-image-dead" />
-                Rondônia
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/roraima.png" alt="Roraima" class="state-image-dead" />
-                Roraima
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/santa_catarina.png" alt="Santa Catarina" class="state-image-dead" />
-                Santa Catarina
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/sergipe.png" alt="Sergipe" class="state-image-dead" />
-                Sergipe
-            </a>
-            <a class="state-option-dead">
-                <img src="images/estados/tocantins.png" alt="Tocantins" class="state-image-dead" />
-                Tocantins
-            </a>
-        </div>
+            }
+        </section>
     </div>
 </main>

@@ -13,3 +13,4 @@ cd brasil-transparente
 
 // TODO - Verificar melhor aproach para o load dos dados
 // TODO - Ajustar SEO
+// TODO - Corrigir warning the imagem https://angular.dev/errors/NG0913 https://angular.dev/guide/image-optimization
