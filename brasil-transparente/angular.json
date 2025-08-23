@@ -57,7 +57,16 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "namedChunks": true,
+              "aot": false,
+              "outputHashing": "none",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -73,6 +82,7 @@
             }
           },
           "defaultConfiguration": "development"
+         
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
