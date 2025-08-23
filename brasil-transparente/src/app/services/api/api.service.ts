@@ -9,6 +9,7 @@ import { environment } from '../../../environments/environment.development';
   providedIn: 'root'
 })
 export class ApiService {
+  //TODO mover as URLS para arquivo referente a cada endpoint
   private readonly API_BASE = environment.apiBase;
   private readonly http: HttpClient = Inject(HttpClient);
 
