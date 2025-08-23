@@ -1,12 +1,13 @@
 import { Component, Inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { StorageService } from '../../services/storage/storage.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  imports: [RouterLink]
 })
 export class HeaderComponent {
   private readonly storageService: StorageService = Inject(StorageService);
