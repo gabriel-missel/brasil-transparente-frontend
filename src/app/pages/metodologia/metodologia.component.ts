@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { VoltarInicioComponent } from '../../components/voltar-inicio/voltar-inicio.component';
 
 @Component({
   selector: 'app-metodologia',
-  imports: [],
+  imports: [VoltarInicioComponent],
   templateUrl: './metodologia.component.html',
   styleUrl: './metodologia.component.scss',
   standalone: true
