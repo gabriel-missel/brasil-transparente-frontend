@@ -1,15 +1,15 @@
 <main>
     @if(isLoading){
-    <div class="loader-container">
-        <div class="loader-spinner"></div>
-        <p>Carregando dados...</p>
-    </div>
+        <div class="loader-container">
+            <div class="loader-spinner"></div>
+            <p>Carregando dados...</p>
+        </div>
 
     } @else {
-    <div class="total-display" *ngIf="!isLoading">
-        <h2>Valor total gasto em 2024:</h2>
-        <div class="total-value">{{ formatLargeCurrency(totalValue) }}</div>
-    </div>
+        <div class="total-display" *ngIf="!isLoading">
+            <h2>Valor total gasto em 2024:</h2>
+            <div class="total-value">{{ formatLargeCurrency(totalValue) }}</div>
+        </div>
     }
 
 </main>
