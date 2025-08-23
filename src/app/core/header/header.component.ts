@@ -1,4 +1,4 @@
-import { Component, Inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { StorageService } from '../../services/storage/storage.service';
 
@@ -7,15 +7,15 @@ import { StorageService } from '../../services/storage/storage.service';
   standalone: true,
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  imports: [RouterLink]
+  imports: []
 })
 export class HeaderComponent {
-  private readonly storageService: StorageService = Inject(StorageService);
-  readonly router: Router = Inject(Router);
+  private readonly storageService: StorageService = inject(StorageService);
+  public router: Router = inject(Router);
 
   activeReport = signal('simplificado');
   federalEntityName = signal('União Federal');
-  federalEntityImage = signal('assets/images/estados/uniao.png');
+  federalEntityImage = signal('images/estados/uniao.png');
 
   afterViewInit(): void {
     this.storageService.federalEntityName$.subscribe(name => {

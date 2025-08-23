@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, inject, Inject, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api/api.service';
 import { DataService } from '../../services/data/data.service';
 import { StorageService } from '../../services/storage/storage.service';
@@ -10,9 +10,9 @@ import { StorageService } from '../../services/storage/storage.service';
   standalone: true,
 })
 export class HomeComponent {
-  private readonly apiService: ApiService = Inject(ApiService);
-  private readonly dataService: DataService = Inject(DataService);
-  private readonly storageService: StorageService = Inject(StorageService);
+  private readonly apiService: ApiService = inject(ApiService);
+  private readonly dataService: DataService = inject(DataService);
+  private readonly storageService: StorageService = inject(StorageService);
 
   federalEntityId: string = '1';
   totalValue: number = 0;
@@ -20,7 +20,7 @@ export class HomeComponent {
   activeReport: string = 'simplificado';
   simplifiedData: any[] = [];
 
-  afterViewInit(): void {
+  ngOnInit(): void {
     this.storageService.federalEntityId$.subscribe(id => {
       this.federalEntityId = id;
       this.loadData();
