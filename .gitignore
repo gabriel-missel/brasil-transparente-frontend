@@ -4,3 +4,6 @@
 # Firebase local files
 pglite-debug.log
 hosting..cache
+
+# Node modules
+node_modules/
