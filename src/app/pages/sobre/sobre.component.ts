@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { VoltarInicioComponent } from '../../components/voltar-inicio/voltar-inicio.component';
 
 @Component({
   selector: 'app-sobre',
-  imports: [],
+  imports: [VoltarInicioComponent],
   templateUrl: './sobre.component.html',
   styleUrl: './sobre.component.scss',
   standalone: true
