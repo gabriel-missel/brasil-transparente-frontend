@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment';
 import { VoltarInicioComponent } from '../voltar-inicio/voltar-inicio.component';
+import { StorageService } from '../../services/storage/storage.service'; // adicione esta linha
 
 @Component({
   selector: 'app-estados',
@@ -13,23 +14,23 @@ import { VoltarInicioComponent } from '../voltar-inicio/voltar-inicio.component'
 })
 export class EstadosComponent {
   private readonly router: Router = inject(Router);
+  private readonly storageService: StorageService = inject(StorageService);
+
   readonly estados = environment.estados.sort((a, b) => {
     // União Federativa sempre primeiro
     if (a.id === 1) return -1;
     if (b.id === 1) return 1;
 
-    // Estados ativos antes dos inativos
+    // Ativos antes dos inativos
     if (a.ativo && !b.ativo) return -1;
     if (!a.ativo && b.ativo) return 1;
 
-    // Já estão ordenados por nome, então não precisa mexer
-    return 0;
+    // Dentro de cada grupo, ordenar alfabeticamente
+    return a.nome.localeCompare(b.nome);
   });
 
   selectState(federalEntity: string, federalEntityImage: string, federalEntityId: number): void {
-    localStorage.setItem("federalEntityName", federalEntity);
-    localStorage.setItem("federalEntityImage", federalEntityImage);
-    localStorage.setItem("federalEntityId", federalEntityId.toString());
+    this.storageService.setFederalEntity(federalEntity, federalEntityImage, federalEntityId.toString());
     this.router.navigate(['/']);
   }
 }
