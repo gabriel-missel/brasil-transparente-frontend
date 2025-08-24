@@ -32,10 +32,7 @@ export class DataService {
       return `R$ ${formatted} ${Math.floor(value / million) === 1 ? 'milhão' : 'milhões'}`;
     }
     
-    return value.toLocaleString('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    });
+    return this.formatCurrency(value);
   }
 
   formatCurrency(value: number): string {
