@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { EstadosComponent } from './pages/estados/estados.component';
-import { SobreComponent } from './pages/sobre/sobre.component';
-import { MetodologiaComponent } from './pages/metodologia/metodologia.component';
-import { OrigemComponent } from './pages/origem/origem.component';
+import { HomeComponent } from './components/home/home.component';
+import { EstadosComponent } from './components/estados/estados.component';
+import { SobreComponent } from './components/sobre/sobre.component';
+import { MetodologiaComponent } from './components/metodologia/metodologia.component';
+import { OrigemComponent } from './components/origem/origem.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
