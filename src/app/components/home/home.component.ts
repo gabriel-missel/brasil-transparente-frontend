@@ -1,15 +1,16 @@
-import { Component, inject, Inject, OnInit } from '@angular/core';
+import { Component, inject, Inject, OnInit, signal } from '@angular/core';
 import { ApiService } from '../../services/api/api.service';
 import { DataService } from '../../services/data/data.service';
 import { StorageService } from '../../services/storage/storage.service';
 import { CommonModule } from '@angular/common';
+import { ToggleBarItemComponent } from '../toggle-bar-item/toggle-bar-item.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, ToggleBarItemComponent]
 })
 export class HomeComponent {
   private readonly apiService: ApiService = inject(ApiService);
@@ -23,6 +24,7 @@ export class HomeComponent {
   activeReport: string = 'simplificado!';
   simplifiedData: any[] = [];
   poderes: any[] = [];
+  showRawTotal = signal(false);
 
   ngOnInit(): void {
     this.storageService.federalEntityId$.subscribe(id => {
@@ -83,4 +85,37 @@ export class HomeComponent {
     return this.dataService.formatCurrency(value);
   }
 
+  onTogglePoder(item: any): void {
+    item.expanded = !item.expanded;
+    if (item.expanded && !item.children) {
+      let observable;
+
+      switch (item.level) {
+        case 0:
+          observable = this.apiService.getMinisterios(item.id);
+          break;
+        case 1:
+          observable = this.apiService.getOrgaos(item.id);
+          break;
+        case 2:
+          observable = this.apiService.getUnidadesGestoras(item.id);
+          break;
+        case 3:
+          observable = this.apiService.getElementoDespesa(item.id);
+          break;
+        default:
+          observable = null;
+      }
+
+      if (observable) {
+        observable.subscribe(children => {
+          item.children = children.map(child => ({
+            ...child,
+            expanded: false,
+            children: null
+          }));
+        });
+      }
+    }
+  }
 }
