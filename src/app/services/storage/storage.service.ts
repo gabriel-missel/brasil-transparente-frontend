@@ -41,15 +41,31 @@ export class StorageService {
     this.federalEntityIdSubject.next(id);
   }
 
-  get federalEntityName(): string {
-    return this.federalEntityNameSubject.value;
+  private cacheKey(url: string): string {
+    return `apiCache:${url}`;
   }
 
-  get federalEntityImage(): string {
-    return this.federalEntityImageSubject.value;
+  getCached<T>(url: string): T | null {
+    const cached = localStorage.getItem(this.cacheKey(url));
+    if (!cached) return null;
+
+    try {
+      const { data, timestamp } = JSON.parse(cached);
+      // 1 dia = 86400000 ms
+      if (Date.now() - timestamp < 86400000) {
+        return data as T;
+      }
+    } catch {
+      console.error(`Erro ao parsear cache para a URL: ${url}`);
+    }
+    localStorage.removeItem(this.cacheKey(url));
+    return null;
   }
 
-  get federalEntityId(): string {
-    return this.federalEntityIdSubject.value;
+  setCache<T>(url: string, data: T): void {
+    localStorage.setItem(
+      this.cacheKey(url),
+      JSON.stringify({ data, timestamp: Date.now() })
+    );
   }
 }

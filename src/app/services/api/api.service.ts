@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { DespesaSimplificada } from '../../models/despesa-simplificada.model';
 import { Poder } from '../../models/poder.model';
 import { environment } from '../../../environments/environment.development';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,37 +13,10 @@ export class ApiService {
   //TODO mover as URLS para arquivo referente a cada endpoint
   private readonly API_BASE = environment.apiBase;
   private readonly http: HttpClient = inject(HttpClient);
-
-  private cacheKey(url: string): string {
-    return `apiCache:${url}`;
-  }
-
-  private getCached<T>(url: string): T | null {
-    const cached = localStorage.getItem(this.cacheKey(url));
-    if (!cached) return null;
-
-    try {
-      const { data, timestamp } = JSON.parse(cached);
-      // 1 dia = 86400000 ms
-      if (Date.now() - timestamp < 86400000) {
-        return data as T;
-      }
-    } catch {
-      console.error(`Erro ao parsear cache para a URL: ${url}`);
-    }
-    localStorage.removeItem(this.cacheKey(url));
-    return null;
-  }
-
-  private setCache<T>(url: string, data: T): void {
-    localStorage.setItem(
-      this.cacheKey(url),
-      JSON.stringify({ data, timestamp: Date.now() })
-    );
-  }
+  private readonly storageService: StorageService = inject(StorageService);
 
   private getWithCache<T>(url: string): Observable<T> {
-    const cached = this.getCached<T>(url);
+    const cached = this.storageService.getCached<T>(url);
     if (cached !== null) {
       return new Observable<T>(observer => {
         observer.next(cached);
@@ -52,7 +26,7 @@ export class ApiService {
     return new Observable<T>(observer => {
       this.http.get<T>(url).subscribe({
         next: (data) => {
-          this.setCache(url, data);
+          this.storageService.setCache(url, data);
           observer.next(data);
           observer.complete();
         },
