@@ -1,7 +1,9 @@
-import { Component, inject, output, signal } from '@angular/core';
+import { Component, inject, output, signal, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from '../../services/storage/storage.service';
 import { ReportType } from '../../models/tipos-relatorios.model';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +12,7 @@ import { ReportType } from '../../models/tipos-relatorios.model';
   styleUrls: ['./header.component.scss'],
   imports: []
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnDestroy {
   private readonly storageService: StorageService = inject(StorageService);
   public readonly router: Router = inject(Router);
 
@@ -20,13 +22,24 @@ export class HeaderComponent {
 
   reportType = ReportType;
 
+  private destroy$ = new Subject<void>();
+
   ngOnInit(): void {
-    this.storageService.federalEntityName$.subscribe(name => {
-      this.federalEntityName.set(name);
-    });
-    this.storageService.federalEntityImage$.subscribe(image => {
-      this.federalEntityImage.set(image);
-    });
+    this.storageService.federalEntityName$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(name => {
+        this.federalEntityName.set(name);
+      });
+    this.storageService.federalEntityImage$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(image => {
+        this.federalEntityImage.set(image);
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   setActiveReport(report: ReportType): void {

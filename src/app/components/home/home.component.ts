@@ -5,6 +5,7 @@ import { StorageService } from '../../services/storage/storage.service';
 import { CommonModule } from '@angular/common';
 import { ToggleBarItemComponent } from '../toggle-bar-item/toggle-bar-item.component';
 import { ReportType } from '../../models/tipos-relatorios.model';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,7 @@ export class HomeComponent {
   private readonly apiService: ApiService = inject(ApiService);
   private readonly dataService: DataService = inject(DataService);
   private readonly storageService: StorageService = inject(StorageService);
+  private destroy$ = new Subject<void>();
 
   federalEntityId: string = '1';
   totalValue: number = 0;
@@ -43,10 +45,17 @@ export class HomeComponent {
   }
 
   ngOnInit(): void {
-    this.storageService.federalEntityId$.subscribe(id => {
-      this.federalEntityId = id;
-      this.loadData();
-    });
+    this.storageService.federalEntityId$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(id => {
+        this.federalEntityId = id;
+        this.loadData();
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   loadData(): void {

@@ -6,6 +6,7 @@ import { ReportType } from '../../models/tipos-relatorios.model';
   providedIn: 'root'
 })
 export class StorageService {
+  // TODO alterar para signal
   private federalEntityNameSubject = new BehaviorSubject<string>('União Federal');
   private federalEntityImageSubject = new BehaviorSubject<string>('/images/estados/uniao.png');
   private federalEntityIdSubject = new BehaviorSubject<string>('1');
