@@ -10,5 +10,18 @@
             <h2>Valor total gasto em 2024:</h2>
             <div class="total-value">{{ formatLargeCurrency(totalValue) }}</div>
         </div>
+
+        <div class="full-report">
+        @for(poder of poderes; track poder.id) {
+          <div class="bar-container">
+            <span class="bar-label">{{ poder.name }}</span>
+            <div class="bar"
+                 [style.width.%]="poder.percentageOfTotal"
+                 [style.backgroundColor]="getBarColor(poder.level)">
+              {{ formatLargeCurrency(poder.totalValueSpent) }} ({{ poder.percentageOfTotal | number:'1.2-2' }}%)
+            </div>
+          </div>
+        }
+    </div>
     }
 </main>
