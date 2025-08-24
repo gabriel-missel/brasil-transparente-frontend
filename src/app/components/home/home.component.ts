@@ -1,4 +1,4 @@
-import { Component, inject, Inject, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, Inject, linkedSignal, OnInit, signal } from '@angular/core';
 import { ApiService } from '../../services/api/api.service';
 import { DataService } from '../../services/data/data.service';
 import { StorageService } from '../../services/storage/storage.service';
@@ -21,10 +21,26 @@ export class HomeComponent {
   federalEntityId: string = '1';
   totalValue: number = 0;
   isLoading: boolean = false;
-  activeReport = signal<ReportType>(ReportType.Simplificado);
+  activeReport = this.storageService.activeReport;
   simplifiedData: any[] = [];
   poderes: any[] = [];
   showRawTotal = signal(false);
+  reportType = ReportType;
+
+  constructor() {
+    let initialized = false;
+    effect(() => {
+      this.activeReport();
+
+      if (!initialized) {
+        initialized = true;
+        return; // Ignora a primeira execução
+      }
+
+      // Só executa a partir da segunda vez
+      this.loadReportData();
+    });
+  }
 
   ngOnInit(): void {
     this.storageService.federalEntityId$.subscribe(id => {
@@ -39,9 +55,6 @@ export class HomeComponent {
       this.totalValue = total;
       this.loadReportData();
     });
-
-    // TODO ao mudar o tipo de relatório, fazer a nova chamada.
-    // this.activeReport
   }
 
   loadReportData(): void {
@@ -53,6 +66,8 @@ export class HomeComponent {
   }
 
   loadSimplifiedReport(): void {
+    this.isLoading = true;
+
     this.apiService.getDespesaSimplificada(this.federalEntityId).subscribe(data => {
       this.simplifiedData = data;
       this.isLoading = false;
@@ -70,11 +85,6 @@ export class HomeComponent {
   getBarColor(level: number): string {
     const colors = ['#3db6f2', '#5cbef3', '#7fcdf4', '#a1dbf3', '#bbbbb8'];
     return colors[level] ?? '#3db6f2';
-  }
-
-  setActiveReport(report: ReportType): void {
-    this.activeReport.set(report);
-    this.loadReportData();
   }
 
   formatLargeCurrency(value: number): string {
