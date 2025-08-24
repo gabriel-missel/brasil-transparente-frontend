@@ -52,6 +52,7 @@ export class HomeComponent {
   loadData(): void {
     this.isLoading = true;
     this.apiService.getTotalValueSpent(this.federalEntityId).subscribe(total => {
+      //TODO adicionar mensagem de erro caso dê erro
       this.totalValue = total;
       this.loadReportData();
     });

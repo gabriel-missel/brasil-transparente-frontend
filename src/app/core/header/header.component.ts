@@ -20,7 +20,7 @@ export class HeaderComponent {
 
   reportType = ReportType;
 
-  afterViewInit(): void {
+  ngOnInit(): void {
     this.storageService.federalEntityName$.subscribe(name => {
       this.federalEntityName.set(name);
     });
