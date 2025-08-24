@@ -1,6 +1,7 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, inject, output, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { StorageService } from '../../services/storage/storage.service';
+import { ReportType } from '../../models/tipos-relatorios.model';
 
 @Component({
   selector: 'app-header',
@@ -11,11 +12,14 @@ import { StorageService } from '../../services/storage/storage.service';
 })
 export class HeaderComponent {
   private readonly storageService: StorageService = inject(StorageService);
-  public router: Router = inject(Router);
+  public readonly router: Router = inject(Router);
 
-  activeReport = signal('simplificado');
   federalEntityName = signal('União Federal');
   federalEntityImage = signal('images/estados/uniao.png');
+  activeReport = signal<ReportType>(ReportType.Simplificado);
+
+  reportChange = output<ReportType>();
+  reportType = ReportType;
 
   afterViewInit(): void {
     this.storageService.federalEntityName$.subscribe(name => {
@@ -26,8 +30,8 @@ export class HeaderComponent {
     });
   }
 
-  setActiveReport(report: string): void {
-    this.activeReport.set(report);
+  setActiveReport(report: ReportType): void {
+    this.reportChange.emit(report);
   }
 
   onMouseOverStateButton(): void {
@@ -41,6 +45,7 @@ export class HeaderComponent {
   }
 
   navigateToEstados(): void {
+    //TODO mover para o routerLink
     this.router.navigate(['/estados']);
   }
 }
