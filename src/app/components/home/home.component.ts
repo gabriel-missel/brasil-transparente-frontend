@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, Inject, linkedSignal, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { ApiService } from '../../services/api/api.service';
 import { DataService } from '../../services/data/data.service';
 import { StorageService } from '../../services/storage/storage.service';
