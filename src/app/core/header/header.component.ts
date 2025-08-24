@@ -16,9 +16,8 @@ export class HeaderComponent {
 
   federalEntityName = signal('União Federal');
   federalEntityImage = signal('images/estados/uniao.png');
-  activeReport = signal<ReportType>(ReportType.Simplificado);
+  activeReport = this.storageService.activeReport
 
-  reportChange = output<ReportType>();
   reportType = ReportType;
 
   afterViewInit(): void {
@@ -31,7 +30,7 @@ export class HeaderComponent {
   }
 
   setActiveReport(report: ReportType): void {
-    this.reportChange.emit(report);
+    this.activeReport.set(report);
   }
 
   onMouseOverStateButton(): void {

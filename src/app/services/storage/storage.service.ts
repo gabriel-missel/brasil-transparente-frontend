@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ReportType } from '../../models/tipos-relatorios.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,8 @@ export class StorageService {
   federalEntityName$ = this.federalEntityNameSubject.asObservable();
   federalEntityImage$ = this.federalEntityImageSubject.asObservable();
   federalEntityId$ = this.federalEntityIdSubject.asObservable();
+
+  activeReport = signal<ReportType>(ReportType.Simplificado);
 
   constructor() {
     this.loadFromLocalStorage();
@@ -32,7 +35,7 @@ export class StorageService {
     localStorage.setItem('federalEntityName', name);
     localStorage.setItem('federalEntityImage', image);
     localStorage.setItem('federalEntityId', id);
-    
+
     this.federalEntityNameSubject.next(name);
     this.federalEntityImageSubject.next(image);
     this.federalEntityIdSubject.next(id);
