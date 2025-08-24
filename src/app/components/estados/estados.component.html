@@ -1,0 +1,21 @@
+<main>
+    <div class="content-container">
+       <app-voltar-inicio/>
+        <h1>Selecione um ente federativo:</h1>
+        <section class="state-selection">
+            @for (estado of estados; track estado.id) {
+                <a
+                [class.state-option-alive]="estado.ativo"
+                [class.state-option-dead]="!estado.ativo"
+                (click)="estado.ativo && selectState(estado.nome, estado.imagem, estado.id)"
+                [attr.tabindex]="estado.ativo ? 0 : -1"
+                [attr.aria-disabled]="!estado.ativo"
+                >
+                <img [src]="estado.imagem" [alt]="estado.nome" [class.state-image-alive]="estado.ativo"
+                    [class.state-image-dead]="!estado.ativo" />
+                {{ estado.nome }}
+            </a>
+            }
+        </section>
+    </div>
+</main>

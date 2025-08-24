@@ -1,0 +1,24 @@
+<header>
+    <div class="header-content">
+        <a routerLink="/">
+            <img src="/images/white-transparent-small.png" alt="BT Logo" class="header-image">
+        </a>
+        @if(router.url === '/'){
+        <nav class="report-nav">
+            <button (click)="navigateToEstados()" class="report-button"
+                (mouseover)="onMouseOverStateButton()" (mouseout)="onMouseOutStateButton()">
+                <img [src]="federalEntityImage()" alt="Estado" id="state-image">
+                <span id="state-name">{{federalEntityName()}}</span>
+            </button>
+            <button class="report-button report-button-text-center" [class.active]="activeReport() === reportType.Simplificado"
+               (click)="setActiveReport(reportType.Simplificado)">
+                Resumo dos Gastos
+            </button>
+            <button class="report-button report-button-text-center" [class.active]="activeReport() === reportType.Completo"
+                (click)="setActiveReport(reportType.Completo)">
+                Gastos Detalhados
+            </button>
+        </nav>
+        }
+    </div>
+</header>

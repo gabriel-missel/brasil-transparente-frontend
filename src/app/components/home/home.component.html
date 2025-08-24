@@ -1,0 +1,62 @@
+<main>
+  @if(isLoading){
+    <div class="loader-container">
+      <div class="loader-spinner"></div>
+      <p>Carregando dados...</p>
+    </div>
+  } @else {
+    <div class="total-display">
+      <h2>Valor total gasto em 2024:</h2>
+      <div
+      (mouseenter)="showRawTotal.set(true)"
+      (mouseleave)="showRawTotal.set(false)"
+      class="total-value">{{ showRawTotal() ? formatCurrency(totalValue) : formatLargeCurrency(totalValue) }}</div>
+    </div>
+
+    @if(activeReport() === reportType.Simplificado) {
+      <div class="simplified-report">
+      <h3>Resumo dos Gastos</h3>
+      <div class="simplified-bars">
+        @for(item of simplifiedData; track item.despesaSimplificadaId) {
+          <app-toggle-bar-item
+            [name]="item.name"
+            [level]="0"
+            [totalValueSpent]="item.totalValue"
+            [percentageOfTotal]="item.percentageOfTotal"
+            [barColor]="getBarColor(0)"
+            [isLastLevel]="true"
+            [isExpanded]="false"
+          ></app-toggle-bar-item>
+        }
+      </div>
+      <small>* Programas de Transferência de Renda incluem Bolsa Família, etc.<br>
+      ** Benefícios Trabalhistas incluem seguro-desemprego, abono salarial, etc.</small>
+    </div>
+    } @else {
+      <div class="full-report">
+        @for(poder of poderes; track poder.id) {
+          <ng-container *ngTemplateOutlet="recursiveBar; context: { $implicit: poder }"></ng-container>
+        }
+      </div>
+    }
+  }
+</main>
+
+<ng-template #recursiveBar let-item>
+  <app-toggle-bar-item
+    [name]="item.name"
+    [level]="item.level"
+    [totalValueSpent]="item.totalValueSpent"
+    [percentageOfTotal]="item.percentageOfTotal"
+    [barColor]="getBarColor(item.level)"
+    [isLastLevel]="item.level === 4"
+    [isExpanded]="item.expanded"
+    (toggle)="onTogglePoder(item)"
+  >
+    @if(item.expanded && item.children) {
+      @for(child of item.children; track child.id) {
+        <ng-container *ngTemplateOutlet="recursiveBar; context: { $implicit: child }"></ng-container>
+      }
+    }
+  </app-toggle-bar-item>
+</ng-template>

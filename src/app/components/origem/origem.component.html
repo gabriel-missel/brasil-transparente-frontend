@@ -1,0 +1,48 @@
+<section class="content-container">
+    <app-voltar-inicio />
+    <main class="text-heavy">
+        <h1>Origem dos Dados</h1>
+
+        <p>
+            No <strong>Brasil Transparente</strong>, acreditamos que a
+            transparência começa com o acesso fácil e organizado às informações.
+            Por isso, reunimos aqui todas as fontes oficiais dos dados utilizados
+            em nosso projeto. Esses links direcionam você para os portais de
+            transparência dos órgãos públicos, onde é possível verificar e baixar
+            os dados brutos que fundamentam nossas análises. Dessa forma,
+            garantimos não apenas a confiabilidade das informações, mas também a
+            possibilidade de que qualquer pessoa possa consultar e validar os
+            dados por si mesma.
+        </p>
+
+        @for(secao of fontesDados; track secao.id) {
+            <h2>{{ secao.titulo }}</h2>
+
+            <ul>
+                @for(fonte of secao.fontes; track fonte.nome) {
+                <li>
+                    Dados {{ fonte.preposicao }}
+                    <a [href]="fonte.url" target="_blank">{{ fonte.nome }}</a>.
+                </li>
+                }
+            </ul>
+
+            @if(secao.descricao) {
+                <p>
+                    {{ secao.descricao }}
+                    @if(secao.portalUrl && secao.portalNome) {
+                    <a [href]="secao.portalUrl" target="_blank">{{ secao.portalNome }}</a>.
+                    }
+                </p>
+            }
+
+            @if(secao.outrasEntidades && secao.outrasEntidades.length > 0) {
+                <ul>
+                    @for(entidade of secao.outrasEntidades; track entidade.nome) {
+                    <li>{{ entidade.nome }}</li>
+                    }
+                </ul>
+            }
+        }
+    </main>
+</section>
