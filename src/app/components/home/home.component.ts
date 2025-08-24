@@ -4,6 +4,7 @@ import { DataService } from '../../services/data/data.service';
 import { StorageService } from '../../services/storage/storage.service';
 import { CommonModule } from '@angular/common';
 import { ToggleBarItemComponent } from '../toggle-bar-item/toggle-bar-item.component';
+import { ReportType } from '../../models/tipos-relatorios.model';
 
 @Component({
   selector: 'app-home',
@@ -20,8 +21,7 @@ export class HomeComponent {
   federalEntityId: string = '1';
   totalValue: number = 0;
   isLoading: boolean = false;
-  // TODO remover a string e colocar enum
-  activeReport: string = 'simplificado!';
+  activeReport = signal<ReportType>(ReportType.Simplificado);
   simplifiedData: any[] = [];
   poderes: any[] = [];
   showRawTotal = signal(false);
@@ -45,7 +45,7 @@ export class HomeComponent {
   }
 
   loadReportData(): void {
-    if (this.activeReport === 'simplificado') {
+    if (this.activeReport() === ReportType.Simplificado) {
       this.loadSimplifiedReport();
     } else {
       this.loadDetailedReport();
@@ -72,8 +72,8 @@ export class HomeComponent {
     return colors[level] ?? '#3db6f2';
   }
 
-  setActiveReport(report: string): void {
-    this.activeReport = report;
+  setActiveReport(report: ReportType): void {
+    this.activeReport.set(report);
     this.loadReportData();
   }
 
