@@ -10,5 +10,5 @@ import { environment } from '../../../environments/environment';
   standalone: true
 })
 export class OrigemComponent {
-  fontesDados = environment.fontesDados;
+  fontesDados = environment.fontesDadosOrigem;
 }
