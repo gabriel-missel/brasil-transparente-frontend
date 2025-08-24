@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment';
-import { VoltarInicioComponent } from '../../components/voltar-inicio/voltar-inicio.component';
+import { VoltarInicioComponent } from '../voltar-inicio/voltar-inicio.component';
 
 @Component({
   selector: 'app-estados',

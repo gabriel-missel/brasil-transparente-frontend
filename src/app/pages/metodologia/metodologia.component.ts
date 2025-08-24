@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { VoltarInicioComponent } from '../../components/voltar-inicio/voltar-inicio.component';
+import { VoltarInicioComponent } from '../voltar-inicio/voltar-inicio.component';
 
 @Component({
   selector: 'app-metodologia',
